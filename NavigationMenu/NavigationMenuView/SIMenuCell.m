@@ -8,7 +8,6 @@
 
 #import "SIMenuCell.h"
 #import "SIMenuConfiguration.h"
-#import "UIColor+Extension.h"
 #import "SICellSelection.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -22,8 +21,8 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.contentView.backgroundColor = [UIColor color:[SIMenuConfiguration itemsColor] withAlpha:[SIMenuConfiguration menuAlpha]];
-        self.textLabel.textColor = [SIMenuConfiguration itemTextColor];
+        self.contentView.backgroundColor = [[SIMenuConfiguration itemsColor] colorWithAlphaComponent:[SIMenuConfiguration menuAlpha]];
+		self.textLabel.textColor = [SIMenuConfiguration itemTextColor];
         self.textLabel.textAlignment = NSTextAlignmentCenter;
         self.textLabel.shadowColor = [UIColor darkGrayColor];
         self.textLabel.shadowOffset = CGSizeMake(0.0, -1.0);
@@ -52,7 +51,7 @@
     CGContextStrokePath(ctx);
     
     CGContextSetRGBStrokeColor(ctx, 1.0f, 1.0f, 1.0f, 0.7f);
-        
+	
     CGContextMoveToPoint(ctx, 0, 0);
     CGContextAddLineToPoint(ctx, self.contentView.bounds.size.width, 0);
     CGContextStrokePath(ctx);

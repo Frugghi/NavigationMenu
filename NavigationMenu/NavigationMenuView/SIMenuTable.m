@@ -10,7 +10,6 @@
 #import "SIMenuCell.h"
 #import "SIMenuConfiguration.h"
 #import <QuartzCore/QuartzCore.h>
-#import "UIColor+Extension.h"
 #import "SICellSelection.h"
 
 @interface SIMenuTable () {
@@ -30,7 +29,7 @@
     if (self) {
         self.items = [NSArray arrayWithArray:items];
         
-        self.layer.backgroundColor = [UIColor color:[SIMenuConfiguration mainColor] withAlpha:0.0].CGColor;
+		self.layer.backgroundColor = [[SIMenuConfiguration mainColor] colorWithAlphaComponent:0.0f].CGColor;
         self.clipsToBounds = YES;
         
         endFrame = self.bounds;
@@ -44,9 +43,9 @@
         self.table.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.table.bounds.size.height, [SIMenuConfiguration menuWidth], self.table.bounds.size.height)];
-        header.backgroundColor = [UIColor color:[SIMenuConfiguration itemsColor] withAlpha:[SIMenuConfiguration menuAlpha]];
-        [self.table addSubview:header];
-
+		header.backgroundColor = [[SIMenuConfiguration itemsColor] colorWithAlphaComponent:[SIMenuConfiguration menuAlpha]];
+		[self.table addSubview:header];
+		
     }
     return self;
 }
@@ -58,8 +57,8 @@
         [self addFooter];
     }
     [UIView animateWithDuration:[SIMenuConfiguration animationDuration] animations:^{
-        self.layer.backgroundColor = [UIColor color:[SIMenuConfiguration mainColor] withAlpha:[SIMenuConfiguration backgroundAlpha]].CGColor;
-        self.table.frame = endFrame;
+		self.layer.backgroundColor = [[SIMenuConfiguration mainColor] colorWithAlphaComponent:[SIMenuConfiguration backgroundAlpha]].CGColor;
+		self.table.frame = endFrame;
         self.table.contentOffset = CGPointMake(0, [SIMenuConfiguration bounceOffset]);
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:[self bounceAnimationDuration] animations:^{
@@ -74,13 +73,13 @@
         self.table.contentOffset = CGPointMake(0, [SIMenuConfiguration bounceOffset]);
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:[SIMenuConfiguration animationDuration] animations:^{
-            self.layer.backgroundColor = [UIColor color:[SIMenuConfiguration mainColor] withAlpha:0.0].CGColor;
-            self.table.frame = startFrame;
+            self.layer.backgroundColor = [[SIMenuConfiguration mainColor] colorWithAlphaComponent:0.0].CGColor;
+			self.table.frame = startFrame;
         } completion:^(BOOL finished) {
-//            [self.table deselectRowAtIndexPath:currentIndexPath animated:NO];
+			//            [self.table deselectRowAtIndexPath:currentIndexPath animated:NO];
             SIMenuCell *cell = (SIMenuCell *)[self.table cellForRowAtIndexPath:currentIndexPath];
             [cell setSelected:NO withCompletionBlock:^{
-
+				
             }];
             currentIndexPath = nil;
             [self removeFooter];
@@ -170,7 +169,7 @@
 {
     SIMenuCell *cell = (SIMenuCell *)[tableView cellForRowAtIndexPath:indexPath];
     [cell setSelected:NO withCompletionBlock:^{
-
+		
     }];
 }
 
