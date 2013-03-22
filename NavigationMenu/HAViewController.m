@@ -23,7 +23,7 @@
     }
 }
 
-- (void)didSelectItemAtIndex:(NSUInteger)index
+- (void)navigationMenu:(SINavigationMenuView *)navigationMenu didSelectItemAtIndex:(NSUInteger)index
 {
     NSLog(@"did selected item at index %d", index);
 }
