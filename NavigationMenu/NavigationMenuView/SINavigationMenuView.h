@@ -19,6 +19,7 @@
 
 @property (nonatomic, weak) id <SINavigationMenuDelegate> delegate;
 @property (nonatomic, strong) NSArray *items;
+@property (nonatomic, strong, readonly) UILabel *titleLabel;
 
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title;
 - (void)displayMenuInView:(UIView *)view;

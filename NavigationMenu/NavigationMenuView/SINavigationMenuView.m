@@ -37,6 +37,12 @@
     self.menuContainer = view;
 }
 
+#pragma mark - Property
+
+- (UILabel *)titleLabel {
+	return self.menuButton.title;
+}
+
 #pragma mark - Actions
 
 - (void)onHandleMenuTap:(id)sender
