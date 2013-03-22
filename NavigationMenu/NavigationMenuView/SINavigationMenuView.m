@@ -48,16 +48,17 @@
 - (void)onHandleMenuTap:(id)sender
 {
     if (self.menuButton.isActive) {
-        NSLog(@"On show");
         [self onShowMenu];
     } else {
-        NSLog(@"On hide");
         [self onHideMenu];
     }
 }
 
 - (void)onShowMenu
 {
+	if (_delegate && [_delegate respondsToSelector:@selector(navigationMenuWillAppear:)]) {
+		[_delegate navigationMenuWillAppear:self];
+	}
     if (!self.table) {
 //        UIWindow *mainWindow = [[UIApplication sharedApplication] keyWindow];
 //        CGRect frame = mainWindow.frame;
@@ -72,6 +73,9 @@
 
 - (void)onHideMenu
 {
+	if (_delegate && [_delegate respondsToSelector:@selector(navigationMenuWillDisappear:)]) {
+		[_delegate navigationMenuWillDisappear:self];
+	}
     [self rotateArrow:0];
     [self.table hide];
 }
@@ -87,9 +91,12 @@
 
 - (void)didSelectItemAtIndex:(NSUInteger)index
 {
-    self.menuButton.active = !self.menuButton.active;
+    self.menuButton.active = ![self.menuButton isActive];
     [self onHandleMenuTap:nil];
-    [self.delegate didSelectItemAtIndex:index];
+	
+	if (_delegate) {
+		[_delegate navigationMenu:self didSelectItemAtIndex:index];
+	}
 }
 
 - (void)didBackgroundTap

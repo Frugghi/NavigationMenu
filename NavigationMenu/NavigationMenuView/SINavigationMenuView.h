@@ -9,11 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SIMenuTable.h"
 
-@protocol SINavigationMenuDelegate <NSObject>
-
-- (void)didSelectItemAtIndex:(NSUInteger)index;
-
-@end
+@protocol SINavigationMenuDelegate;
 
 @interface SINavigationMenuView : UIView <SIMenuDelegate>
 
@@ -23,5 +19,16 @@
 
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title;
 - (void)displayMenuInView:(UIView *)view;
+
+@end
+
+@protocol SINavigationMenuDelegate <NSObject>
+
+- (void)navigationMenu:(SINavigationMenuView *)navigationMenu didSelectItemAtIndex:(NSUInteger)index;
+
+@optional
+
+- (void)navigationMenuWillAppear:(SINavigationMenuView *)navigationMenu;
+- (void)navigationMenuWillDisappear:(SINavigationMenuView *)navigationMenu;
 
 @end
