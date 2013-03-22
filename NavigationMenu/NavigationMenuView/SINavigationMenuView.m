@@ -37,8 +37,8 @@
     self.menuContainer = view;
 }
 
-#pragma mark -
-#pragma mark Actions
+#pragma mark - Actions
+
 - (void)onHandleMenuTap:(id)sender
 {
     if (self.menuButton.isActive) {
@@ -77,8 +77,8 @@
     } completion:NULL];
 }
 
-#pragma mark -
-#pragma mark Delegate methods
+#pragma mark - Delegate methods
+
 - (void)didSelectItemAtIndex:(NSUInteger)index
 {
     self.menuButton.isActive = !self.menuButton.isActive;
@@ -90,15 +90,6 @@
 {
     self.menuButton.isActive = !self.menuButton.isActive;
     [self onHandleMenuTap:nil];
-}
-
-#pragma mark -
-#pragma mark Memory management
-- (void)dealloc
-{
-    self.items = nil;
-    self.menuButton = nil;
-    self.menuContainer = nil;
 }
 
 @end

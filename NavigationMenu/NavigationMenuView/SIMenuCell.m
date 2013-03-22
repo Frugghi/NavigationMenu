@@ -78,9 +78,4 @@
     }];
 }
 
-- (void)dealloc
-{
-    self.cellSelection = nil;
-}
-
 @end

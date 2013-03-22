@@ -112,11 +112,5 @@
     [self setNeedsDisplay];
 }
 
-#pragma mark - Deallocation
-
-- (void)dealloc
-{
-    [self setSpotlightGradientRef:nil];
-}
 
 @end

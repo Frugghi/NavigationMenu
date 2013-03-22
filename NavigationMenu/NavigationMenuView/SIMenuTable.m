@@ -114,13 +114,6 @@
     [self.menuDelegate didBackgroundTap];
 }
 
-- (void)dealloc
-{
-    self.items = nil;
-    self.table = nil;
-    self.menuDelegate = nil;
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
