@@ -56,7 +56,7 @@
 #pragma mark Handle taps
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    self.isActive = !self.isActive;
+    self.active = !self.active;
     CGGradientRef defaultGradientRef = [[self class] newSpotlightGradient];
     [self setSpotlightGradientRef:defaultGradientRef];
     CGGradientRelease(defaultGradientRef);

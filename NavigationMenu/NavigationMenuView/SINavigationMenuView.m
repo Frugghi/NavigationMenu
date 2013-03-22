@@ -81,14 +81,14 @@
 
 - (void)didSelectItemAtIndex:(NSUInteger)index
 {
-    self.menuButton.isActive = !self.menuButton.isActive;
+    self.menuButton.active = !self.menuButton.active;
     [self onHandleMenuTap:nil];
     [self.delegate didSelectItemAtIndex:index];
 }
 
 - (void)didBackgroundTap
 {
-    self.menuButton.isActive = !self.menuButton.isActive;
+    self.menuButton.active = !self.menuButton.active;
     [self onHandleMenuTap:nil];
 }
 
