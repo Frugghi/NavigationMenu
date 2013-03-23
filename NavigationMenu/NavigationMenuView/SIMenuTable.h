@@ -8,12 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol SIMenuDelegate <NSObject>
-
-- (void)didBackgroundTap;
-- (void)didSelectItemAtIndex:(NSUInteger)index;
-
-@end
+@protocol SIMenuDelegate;
 
 @interface SIMenuTable : UIView <UITableViewDataSource, UITableViewDelegate>
 
@@ -23,5 +18,17 @@
 - (id)initWithFrame:(CGRect)frame items:(NSArray *)items;
 - (void)show;
 - (void)hide;
+
+@end
+
+@protocol SIMenuDelegate <NSObject>
+
+- (void)menuTable:(SIMenuTable *)menuTable didBackgroundTap:(id)sender;
+- (void)menuTable:(SIMenuTable *)menuTable didSelectItemAtIndex:(NSUInteger)index;
+
+@optional
+
+- (void)menuTableDidShow:(SIMenuTable *)menuTable;
+- (void)menuTableDidHide:(SIMenuTable *)menuTable;
 
 @end

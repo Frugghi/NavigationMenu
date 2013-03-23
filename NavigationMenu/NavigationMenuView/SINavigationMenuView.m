@@ -85,9 +85,6 @@
 		[_delegate navigationMenuWillAppear:self];
 	}
     if (!self.table) {
-//        UIWindow *mainWindow = [[UIApplication sharedApplication] keyWindow];
-//        CGRect frame = mainWindow.frame;
-//        frame.origin.y += self.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height;
         self.table = [[SIMenuTable alloc] initWithFrame:self.menuContainer.frame items:self.items];
 		[self.table setMenuConfiguration:_menuConfiguration];
         [self.table setMenuDelegate:self];
@@ -117,9 +114,23 @@
 					 completion:nil];
 }
 
-#pragma mark - Delegate methods
+#pragma mark - Table delegate methods
 
-- (void)didSelectItemAtIndex:(NSUInteger)index
+- (void)menuTableDidShow:(SIMenuTable *)menuTable
+{
+	if (_delegate && [_delegate respondsToSelector:@selector(navigationMenuDidAppear:)]) {
+		[_delegate navigationMenuDidAppear:self];
+	}
+}
+
+- (void)menuTableDidHide:(SIMenuTable *)menuTable
+{
+	if (_delegate && [_delegate respondsToSelector:@selector(navigationMenuDidDisappear:)]) {
+		[_delegate navigationMenuDidDisappear:self];
+	}
+}
+
+- (void)menuTable:(SIMenuTable *)menuTable didSelectItemAtIndex:(NSUInteger)index
 {
     self.menuButton.active = ![self.menuButton isActive];
     [self onHandleMenuTap:nil];
@@ -129,7 +140,7 @@
 	}
 }
 
-- (void)didBackgroundTap
+- (void)menuTable:(SIMenuTable *)menuTable didBackgroundTap:(id)sender
 {
     self.menuButton.active = ![self.menuButton isActive];
     [self onHandleMenuTap:nil];

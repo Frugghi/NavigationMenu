@@ -77,6 +77,10 @@
 						 [UIView animateWithDuration:[self bounceAnimationDuration]
 										  animations:^{
 											  self.table.contentOffset = CGPointMake(0, 0);
+										  } completion:^(BOOL finished) {
+											  if (_menuDelegate && [_menuDelegate respondsToSelector:@selector(menuTableDidShow:)]) {
+												  [_menuDelegate menuTableDidShow:self];
+											  }
 										  }];
 					 }];
 }
@@ -99,6 +103,9 @@
 											  [self removeFooter];
 											  [self.table removeFromSuperview];
 											  [self removeFromSuperview];
+											  if (_menuDelegate && [_menuDelegate respondsToSelector:@selector(menuTableDidHide:)]) {
+												  [_menuDelegate menuTableDidHide:self];
+											  }
 										  }];
 					 }];
 }
@@ -125,7 +132,7 @@
 
 - (void)onBackgroundTap:(id)sender
 {
-    [self.menuDelegate didBackgroundTap];
+    [self.menuDelegate menuTable:self didBackgroundTap:sender];
 }
 
 - (void)setMenuConfiguration:(Class)menuConfiguration
@@ -177,7 +184,7 @@
     
     SIMenuCell *cell = (SIMenuCell *)[tableView cellForRowAtIndexPath:indexPath];
     [cell setSelected:YES withCompletionBlock:^{
-		[self.menuDelegate didSelectItemAtIndex:indexPath.row];
+		[self.menuDelegate menuTable:self didSelectItemAtIndex:indexPath.row];
     }];
 }
 

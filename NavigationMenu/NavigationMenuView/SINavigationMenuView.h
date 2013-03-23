@@ -30,6 +30,8 @@
 @optional
 
 - (void)navigationMenuWillAppear:(SINavigationMenuView *)navigationMenu;
+- (void)navigationMenuDidAppear:(SINavigationMenuView *)navigationMenu;
 - (void)navigationMenuWillDisappear:(SINavigationMenuView *)navigationMenu;
+- (void)navigationMenuDidDisappear:(SINavigationMenuView *)navigationMenu;
 
 @end
