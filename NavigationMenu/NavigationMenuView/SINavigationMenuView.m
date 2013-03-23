@@ -101,6 +101,7 @@
     }
     [self.menuContainer addSubview:self.table];
     [self rotateArrow:M_PI];
+	[self.table setItems:self.items];
     [self.table show];
 }
 
