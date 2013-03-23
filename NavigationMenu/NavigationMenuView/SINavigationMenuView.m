@@ -8,24 +8,36 @@
 
 #import "SINavigationMenuView.h"
 #import "SIMenuButton.h"
-#import "QuartzCore/QuartzCore.h"
+#import <QuartzCore/QuartzCore.h>
 #import "SIMenuConfiguration.h"
 
 @interface SINavigationMenuView  ()
+
 @property (nonatomic, strong) SIMenuButton *menuButton;
 @property (nonatomic, strong) SIMenuTable *table;
 @property (nonatomic, strong) UIView *menuContainer;
+
 @end
 
 @implementation SINavigationMenuView
+
+- (id)init
+{
+	return [self initWithFrame:CGRectZero];
+}
+
+- (id)initWithFrame:(CGRect)frame {
+	return [self initWithFrame:frame title:@""];
+}
 
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title
 {
     self = [super initWithFrame:frame];
     if (self) {
+		_menuConfiguration = [SIMenuConfiguration class];
         frame.origin.y += 1.0;
         self.menuButton = [[SIMenuButton alloc] initWithFrame:frame];
-        self.menuButton.title.text = title;
+        [self.menuButton.title setText:title];
         [self.menuButton addTarget:self action:@selector(onHandleMenuTap:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.menuButton];
     }
@@ -39,15 +51,28 @@
 
 #pragma mark - Property
 
-- (UILabel *)titleLabel {
+- (UILabel *)titleLabel
+{
 	return self.menuButton.title;
+}
+
+- (void)setMenuConfiguration:(Class)menuConfiguration
+{
+	if (_menuConfiguration != menuConfiguration && [menuConfiguration isSubclassOfClass:[SIMenuConfiguration class]]) {
+		_menuConfiguration = menuConfiguration;
+		
+		[self.menuButton setMenuConfiguration:_menuConfiguration];
+		if (self.table) {
+			[self.table setMenuConfiguration:_menuConfiguration];
+		}
+	}
 }
 
 #pragma mark - Actions
 
 - (void)onHandleMenuTap:(id)sender
 {
-    if (self.menuButton.isActive) {
+    if ([self.menuButton isActive]) {
         [self onShowMenu];
     } else {
         [self onHideMenu];
@@ -64,7 +89,8 @@
 //        CGRect frame = mainWindow.frame;
 //        frame.origin.y += self.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height;
         self.table = [[SIMenuTable alloc] initWithFrame:self.menuContainer.frame items:self.items];
-        self.table.menuDelegate = self;
+		[self.table setMenuConfiguration:_menuConfiguration];
+        [self.table setMenuDelegate:self];
     }
     [self.menuContainer addSubview:self.table];
     [self rotateArrow:M_PI];
@@ -82,9 +108,13 @@
 
 - (void)rotateArrow:(float)degrees
 {
-    [UIView animateWithDuration:[SIMenuConfiguration animationDuration] delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-        self.menuButton.arrow.layer.transform = CATransform3DMakeRotation(degrees, 0, 0, 1);
-    } completion:NULL];
+    [UIView animateWithDuration:[_menuConfiguration menuAnimationDuration]
+						  delay:0
+						options:UIViewAnimationOptionAllowUserInteraction
+					 animations:^{
+						 self.menuButton.arrow.layer.transform = CATransform3DMakeRotation(degrees, 0, 0, 1);
+					 }
+					 completion:nil];
 }
 
 #pragma mark - Delegate methods
@@ -101,7 +131,7 @@
 
 - (void)didBackgroundTap
 {
-    self.menuButton.active = !self.menuButton.active;
+    self.menuButton.active = ![self.menuButton isActive];
     [self onHandleMenuTap:nil];
 }
 

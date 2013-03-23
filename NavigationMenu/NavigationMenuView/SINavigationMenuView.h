@@ -14,6 +14,7 @@
 @interface SINavigationMenuView : UIView <SIMenuDelegate>
 
 @property (nonatomic, weak) id <SINavigationMenuDelegate> delegate;
+@property (nonatomic, assign) Class menuConfiguration;
 @property (nonatomic, strong) NSArray *items;
 @property (nonatomic, strong, readonly) UILabel *titleLabel;
 

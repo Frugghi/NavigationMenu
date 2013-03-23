@@ -11,40 +11,40 @@
 @implementation SIMenuConfiguration
 
 //Menu width
-+ (float)menuWidth
++ (CGFloat)menuWidth
 {
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     return window.frame.size.width;
 }
 
 //Menu item height
-+ (float)itemCellHeight
++ (CGFloat)itemCellHeight
 {
     return 44.0f;
 }
 
 //Animation duration of menu appearence
-+ (float)animationDuration
++ (CGFloat)menuAnimationDuration
 {
     return 0.3f;
 }
 
 //Menu substrate alpha value
-+ (float)backgroundAlpha
++ (CGFloat)backgroundAlpha
 {
-    return 0.6;
+    return 0.6f;
 }
 
 //Menu alpha value
-+ (float)menuAlpha
++ (CGFloat)menuAlpha
 {
-    return 0.8;
+    return 0.8f;
 }
 
 //Value of bounce
-+ (float)bounceOffset
++ (CGFloat)bounceOffset
 {
-    return -7.0;
+    return -7.0f;
 }
 
 //Arrow image near title
@@ -54,9 +54,9 @@
 }
 
 //Distance between Title and arrow image
-+ (float)arrowPadding
++ (CGFloat)arrowPadding
 {
-    return 13.0;
+    return 13.0f;
 }
 
 //Items color in menu
@@ -70,9 +70,9 @@
     return [UIColor blackColor];
 }
 
-+ (float)selectionSpeed
++ (CGFloat)selectionSpeed
 {
-    return 0.15;
+    return 0.15f;
 }
 
 + (UIColor *)itemTextColor
@@ -82,7 +82,7 @@
 
 + (UIColor *)selectionColor
 {
-    return [UIColor colorWithRed:45.0/255.0 green:105.0/255.0 blue:166.0/255.0 alpha:1.0];
+    return [UIColor colorWithRed:45.0f/255.0f green:105.0f/255.0f blue:166.0f/255.0f alpha:1.0f];
 }
 
 @end

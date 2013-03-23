@@ -9,29 +9,30 @@
 #import <Foundation/Foundation.h>
 
 @interface SIMenuConfiguration : NSObject
+
 //Menu width
-+ (float)menuWidth;
++ (CGFloat)menuWidth;
 
 //Menu item height
-+ (float)itemCellHeight;
++ (CGFloat)itemCellHeight;
 
 //Animation duration of menu appearence
-+ (float)animationDuration;
++ (CGFloat)menuAnimationDuration;
 
 //Menu substrate alpha value
-+ (float)backgroundAlpha;
++ (CGFloat)backgroundAlpha;
 
 //Menu alpha value
-+ (float)menuAlpha;
++ (CGFloat)menuAlpha;
 
 //Value of bounce
-+ (float)bounceOffset;
++ (CGFloat)bounceOffset;
 
 //Arrow image near title
 + (UIImage *)arrowImage;
 
 //Distance between Title and arrow image
-+ (float)arrowPadding;
++ (CGFloat)arrowPadding;
 
 //Items color in menu
 + (UIColor *)itemsColor;
@@ -40,11 +41,12 @@
 + (UIColor *)mainColor;
 
 //Item selection animation speed
-+ (float)selectionSpeed;
++ (CGFloat)selectionSpeed;
 
 //Menu item text color
 + (UIColor *)itemTextColor;
 
 //Selection color
 + (UIColor *)selectionColor;
+
 @end

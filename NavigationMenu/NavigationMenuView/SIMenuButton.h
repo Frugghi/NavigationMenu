@@ -11,6 +11,7 @@
 @interface SIMenuButton : UIControl
 
 @property (nonatomic, assign, getter = isActive) BOOL active;
+@property (nonatomic, assign) Class menuConfiguration;
 @property (nonatomic, assign) CGGradientRef spotlightGradientRef;
 @property (nonatomic, assign) CGFloat spotlightStartRadius;
 @property (nonatomic, assign) CGFloat spotlightEndRadius;

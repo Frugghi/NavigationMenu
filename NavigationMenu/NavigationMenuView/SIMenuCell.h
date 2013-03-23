@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface SIMenuCell : UITableViewCell
+
+@property (nonatomic, assign) Class menuConfiguration;
+
 - (void)setSelected:(BOOL)selected withCompletionBlock:(void (^)())completion;
+
 @end

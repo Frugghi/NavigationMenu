@@ -12,7 +12,9 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface SIMenuCell ()
+
 @property (nonatomic, strong) SICellSelection *cellSelection;
+
 @end
 
 @implementation SIMenuCell
@@ -21,22 +23,40 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.contentView.backgroundColor = [[SIMenuConfiguration itemsColor] colorWithAlphaComponent:[SIMenuConfiguration menuAlpha]];
-		self.textLabel.textColor = [SIMenuConfiguration itemTextColor];
-        self.textLabel.textAlignment = NSTextAlignmentCenter;
-        self.textLabel.shadowColor = [UIColor darkGrayColor];
-        self.textLabel.shadowOffset = CGSizeMake(0.0, -1.0);
+		_menuConfiguration = [SIMenuConfiguration class];
         
-        self.selectionStyle = UITableViewCellEditingStyleNone;
-        
-        self.cellSelection = [[SICellSelection alloc] initWithFrame:self.bounds andColor:[SIMenuConfiguration selectionColor]];
-        [self.cellSelection.layer setCornerRadius:6.0];
-        [self.cellSelection.layer setMasksToBounds:YES];
-        
-        self.cellSelection.alpha = 0.0;
+        self.cellSelection = [[SICellSelection alloc] initWithFrame:self.bounds andColor:[_menuConfiguration selectionColor]];
         [self.contentView insertSubview:self.cellSelection belowSubview:self.textLabel];
+		
+		[self configure];
     }
     return self;
+}
+
+- (void)configure
+{
+	[self.contentView setBackgroundColor:[[_menuConfiguration itemsColor] colorWithAlphaComponent:[_menuConfiguration menuAlpha]]];
+	
+	[self.textLabel setTextColor:[_menuConfiguration itemTextColor]];
+	[self.textLabel setTextAlignment:UITextAlignmentCenter];
+	[self.textLabel setShadowColor:[UIColor darkGrayColor]];
+	[self.textLabel setShadowOffset:CGSizeMake(0.0, -1.0)];
+	
+	[self setSelectionStyle:UITableViewCellSelectionStyleNone];
+	
+	[self.cellSelection.layer setCornerRadius:6.0f];
+	[self.cellSelection.layer setMasksToBounds:YES];
+	[self.cellSelection setAlpha:0.0f];
+	[self.cellSelection setBaseColor:[_menuConfiguration selectionColor]];
+}
+
+- (void)setMenuConfiguration:(Class)menuConfiguration
+{
+	if (_menuConfiguration != menuConfiguration && [menuConfiguration isSubclassOfClass:[SIMenuConfiguration class]]) {
+		_menuConfiguration = menuConfiguration;
+		
+		[self configure];
+	}
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -65,17 +85,15 @@
 
 - (void)setSelected:(BOOL)selected withCompletionBlock:(void (^)())completion
 {
-    float alpha = 0.0;
-    if (selected) {
-        alpha = 1.0;
-    } else {
-        alpha = 0.0;
-    }
-    [UIView animateWithDuration:[SIMenuConfiguration selectionSpeed] animations:^{
-        self.cellSelection.alpha = alpha;
-    } completion:^(BOOL finished) {
-        completion();
-    }];
+    CGFloat alpha = (selected ? 1.0f : 0.0f);
+    [UIView animateWithDuration:[_menuConfiguration selectionSpeed]
+					 animations:^{
+						 [self.cellSelection setAlpha:alpha];
+					 } completion:^(BOOL finished) {
+						 if (completion) {
+							 completion();
+						 }
+					 }];
 }
 
 @end

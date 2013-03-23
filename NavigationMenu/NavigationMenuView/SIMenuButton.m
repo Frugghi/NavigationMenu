@@ -15,6 +15,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+		_menuConfiguration = [SIMenuConfiguration class];
+		
         if ([self defaultGradient]) {
             
         } else {
@@ -34,8 +36,10 @@
         self.title.shadowOffset = CGSizeMake(0, -1);
         [self addSubview:self.title];
 
-        self.arrow = [[UIImageView alloc] initWithImage:[SIMenuConfiguration arrowImage]];
+        self.arrow = [[UIImageView alloc] initWithImage:[_menuConfiguration arrowImage]];
         [self addSubview:self.arrow];
+		
+		[self configure];
     }
     return self;
 }
@@ -49,11 +53,28 @@
 {
     [self.title sizeToFit];
     self.title.center = CGPointMake(self.frame.size.width/2, (self.frame.size.height-2.0)/2);
-    self.arrow.center = CGPointMake(CGRectGetMaxX(self.title.frame) + [SIMenuConfiguration arrowPadding], self.frame.size.height / 2);
+    self.arrow.center = CGPointMake(CGRectGetMaxX(self.title.frame) + [_menuConfiguration arrowPadding], self.frame.size.height / 2);
 }
 
-#pragma mark -
-#pragma mark Handle taps
+- (void)configure
+{
+	[self.arrow setImage:[_menuConfiguration arrowImage]];
+	
+	[self setNeedsLayout];
+}
+
+#pragma mark - Property
+
+- (void)setMenuConfiguration:(Class)menuConfiguration {
+	if (_menuConfiguration != menuConfiguration && [_menuConfiguration isSubclassOfClass:[SIMenuConfiguration class]]) {
+		_menuConfiguration = menuConfiguration;
+		
+		[self configure];
+	}
+}
+
+#pragma mark - Handle taps
+
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
     self.active = !self.active;
@@ -62,20 +83,24 @@
     CGGradientRelease(defaultGradientRef);
     return YES;
 }
+
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
     return YES;
 }
+
 - (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
     self.spotlightGradientRef = nil;
 }
+
 - (void)cancelTrackingWithEvent:(UIEvent *)event
 {
     self.spotlightGradientRef = nil;
 }
 
 #pragma mark - Drawing Override
+
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -84,7 +109,6 @@
     float startRadius = self.spotlightStartRadius;
     CGContextDrawRadialGradient (context, gradient, self.spotlightCenter, startRadius, self.spotlightCenter, radius, kCGGradientDrawsAfterEndLocation);
 }
-
 
 #pragma mark - Factory Method
 

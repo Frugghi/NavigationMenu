@@ -9,13 +9,16 @@
 #import <UIKit/UIKit.h>
 
 @protocol SIMenuDelegate <NSObject>
+
 - (void)didBackgroundTap;
 - (void)didSelectItemAtIndex:(NSUInteger)index;
+
 @end
 
 @interface SIMenuTable : UIView <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, weak) id <SIMenuDelegate> menuDelegate;
+@property (nonatomic, assign) Class menuConfiguration;
 
 - (id)initWithFrame:(CGRect)frame items:(NSArray *)items;
 - (void)show;

@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface SICellSelection : UIView
-- (id)initWithFrame:(CGRect)frame andColor:(UIColor *)baseColor_;
+
+@property (nonatomic, strong) UIColor *baseColor;
+
+- (id)initWithFrame:(CGRect)frame andColor:(UIColor *)baseColor;
+
 @end
