@@ -51,6 +51,16 @@
 
 #pragma mark - Property
 
+- (NSString *)title
+{
+	return self.menuButton.title.text;
+}
+
+- (void)setTitle:(NSString *)title
+{
+	[[self.menuButton title] setText:title];
+}
+
 - (UILabel *)titleLabel
 {
 	return self.menuButton.title;
