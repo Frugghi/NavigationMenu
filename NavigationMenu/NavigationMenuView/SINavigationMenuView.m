@@ -35,21 +35,50 @@
     self = [super initWithFrame:frame];
     if (self) {
 		_menuConfiguration = [SIMenuConfiguration class];
-        frame.origin.y += 1.0;
+		
         self.menuButton = [[SIMenuButton alloc] initWithFrame:frame];
-        [self.menuButton.title setText:title];
+		[self.menuButton setBackgroundColor:[UIColor clearColor]];
         [self.menuButton addTarget:self action:@selector(onHandleMenuTap:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.menuButton];
+		
+		[self setTitle:title];
     }
     return self;
 }
 
 - (void)displayMenuInView:(UIView *)view
 {
+	if (self.menuContainer) {
+		[self.menuContainer removeObserver:self forKeyPath:@"frame"];
+	}
+	
     self.menuContainer = view;
+	
+	[self.menuContainer addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:NULL];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+	@try {
+        if (object && [object isKindOfClass:[UIView class]] && [keyPath isEqualToString:@"frame"]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+				[self.table setFrame:self.menuContainer.bounds];
+            });
+        }
+    }
+    @catch (NSException *exception) {
+        
+    }
 }
 
 #pragma mark - Property
+
+- (void)setFrame:(CGRect)frame
+{
+	[super setFrame:frame];
+	
+	[self.menuButton setFrame:self.bounds];
+}
 
 - (NSString *)title
 {
@@ -59,6 +88,8 @@
 - (void)setTitle:(NSString *)title
 {
 	[[self.menuButton title] setText:title];
+	CGFloat width = [self.menuButton.title.text sizeWithFont:self.menuButton.title.font].width + [_menuConfiguration arrowPadding];
+	[self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, width, self.frame.size.height)];
 }
 
 - (UILabel *)titleLabel
@@ -95,7 +126,7 @@
 		[_delegate navigationMenuWillAppear:self];
 	}
     if (!self.table) {
-        self.table = [[SIMenuTable alloc] initWithFrame:self.menuContainer.frame items:self.items];
+        self.table = [[SIMenuTable alloc] initWithFrame:self.menuContainer.bounds items:self.items];
 		[self.table setMenuConfiguration:_menuConfiguration];
         [self.table setMenuDelegate:self];
     }

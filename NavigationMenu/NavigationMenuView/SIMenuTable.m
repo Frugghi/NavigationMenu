@@ -43,9 +43,15 @@
     return self;
 }
 
+- (void)setFrame:(CGRect)frame
+{
+	[super setFrame:frame];
+	
+	[self configure];
+}
+
 - (void)configure
 {
-	[self.layer setBackgroundColor:[[[_menuConfiguration mainColor] colorWithAlphaComponent:0.0f] CGColor]];
 	[self setClipsToBounds:YES];
 	
 	endFrame = self.bounds;
@@ -54,8 +60,11 @@
 	
 	if (self.table.superview) {
 		[self.table setFrame:endFrame];
+		[self addFooter];
+		[self.layer setBackgroundColor:[[[_menuConfiguration mainColor] colorWithAlphaComponent:[_menuConfiguration backgroundAlpha]] CGColor]];
 	} else {
 		[self.table setFrame:startFrame];
+		[self.layer setBackgroundColor:[[[_menuConfiguration mainColor] colorWithAlphaComponent:0.0f] CGColor]];
 	}
 	
 	[self.table reloadData];
@@ -64,9 +73,8 @@
 - (void)show
 {
     [self addSubview:self.table];
-    if (!self.table.tableFooterView) {
-        [self addFooter];
-    }
+    [self addFooter];
+	[self.table reloadData];
     [UIView animateWithDuration:[_menuConfiguration menuAnimationDuration]
 					 animations:^{
 						 self.layer.backgroundColor = [[_menuConfiguration mainColor] colorWithAlphaComponent:[_menuConfiguration backgroundAlpha]].CGColor;
@@ -117,11 +125,15 @@
 
 - (void)addFooter
 {
-    UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [_menuConfiguration menuWidth], self.table.bounds.size.height - (self.items.count * [_menuConfiguration itemCellHeight]))];
-    self.table.tableFooterView = footer;
+	if (!self.table.tableFooterView) {
+		UIView *footer = [[UIView alloc] initWithFrame:CGRectZero];
+		self.table.tableFooterView = footer;
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onBackgroundTap:)];
-    [footer addGestureRecognizer:tap];
+		UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onBackgroundTap:)];
+		[footer addGestureRecognizer:tap];
+	}
+	
+	[self.table.tableFooterView setFrame:CGRectMake(0, 0, self.table.bounds.size.width, self.table.bounds.size.height - (self.items.count * [_menuConfiguration itemCellHeight]))];	
 }
 
 - (void)removeFooter
