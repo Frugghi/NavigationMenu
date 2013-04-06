@@ -82,19 +82,19 @@
 
 - (NSString *)title
 {
-	return self.menuButton.title.text;
+	return self.menuButton.titleLabel.text;
 }
 
 - (void)setTitle:(NSString *)title
 {
-	[[self.menuButton title] setText:title];
-	CGFloat width = [self.menuButton.title.text sizeWithFont:self.menuButton.title.font].width + [_menuConfiguration arrowPadding];
+	[[self.menuButton titleLabel] setText:title];
+	CGFloat width = [self.menuButton.titleLabel.text sizeWithFont:self.menuButton.titleLabel.font].width + [_menuConfiguration arrowPadding];
 	[self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, width, self.frame.size.height)];
 }
 
 - (UILabel *)titleLabel
 {
-	return self.menuButton.title;
+	return self.menuButton.titleLabel;
 }
 
 - (void)setMenuConfiguration:(Class)menuConfiguration

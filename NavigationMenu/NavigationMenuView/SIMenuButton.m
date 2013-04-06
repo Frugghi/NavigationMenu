@@ -17,14 +17,14 @@
     if (self) {
 		_menuConfiguration = [SIMenuConfiguration class];
 		
-        self.title = [[UILabel alloc] initWithFrame:frame];
-        self.title.textAlignment = NSTextAlignmentCenter;
-        self.title.backgroundColor = [UIColor clearColor];
-        self.title.textColor = [UIColor whiteColor];
-        self.title.font = [UIFont boldSystemFontOfSize:20.0];
-        self.title.shadowColor = [UIColor darkGrayColor];
-        self.title.shadowOffset = CGSizeMake(0, -1);
-        [self addSubview:self.title];
+        self.titleLabel = [[UILabel alloc] initWithFrame:frame];
+        self.titleLabel.textAlignment = NSTextAlignmentCenter;
+        self.titleLabel.backgroundColor = [UIColor clearColor];
+        self.titleLabel.textColor = [UIColor whiteColor];
+        self.titleLabel.font = [UIFont boldSystemFontOfSize:20.0];
+        self.titleLabel.shadowColor = [UIColor darkGrayColor];
+        self.titleLabel.shadowOffset = CGSizeMake(0, -1);
+        [self addSubview:self.titleLabel];
 
         self.arrow = [[UIImageView alloc] initWithImage:[_menuConfiguration arrowImage]];
         [self addSubview:self.arrow];
@@ -50,9 +50,9 @@
 {
 	[super layoutSubviews];
 		
-    [self.title sizeToFit];
-    self.title.center = CGPointMake(self.frame.size.width/2, (self.frame.size.height-2.0)/2);
-    self.arrow.center = CGPointMake(CGRectGetMaxX(self.title.frame) + [_menuConfiguration arrowPadding], self.frame.size.height / 2);
+    [self.titleLabel sizeToFit];
+    self.titleLabel.center = CGPointMake(self.frame.size.width/2, (self.frame.size.height-2.0)/2);
+    self.arrow.center = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + [_menuConfiguration arrowPadding], self.frame.size.height / 2);
 }
 
 - (void)configure
