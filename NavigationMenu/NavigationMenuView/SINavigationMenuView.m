@@ -73,6 +73,10 @@
 
 #pragma mark - Property
 
+- (BOOL)isShowing {
+	return self.menuButton.isActive;
+}
+
 - (void)setFrame:(CGRect)frame
 {
 	[super setFrame:frame];
