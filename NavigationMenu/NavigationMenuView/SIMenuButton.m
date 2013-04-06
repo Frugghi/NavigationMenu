@@ -18,14 +18,23 @@
 		_menuConfiguration = [SIMenuConfiguration class];
 		
         self.titleLabel = [[UILabel alloc] initWithFrame:frame];
-        self.titleLabel.textAlignment = NSTextAlignmentCenter;
+        self.titleLabel.textAlignment = UITextAlignmentCenter;
         self.titleLabel.backgroundColor = [UIColor clearColor];
         self.titleLabel.textColor = [UIColor whiteColor];
         self.titleLabel.font = [UIFont boldSystemFontOfSize:20.0];
         self.titleLabel.shadowColor = [UIColor darkGrayColor];
         self.titleLabel.shadowOffset = CGSizeMake(0, -1);
         [self addSubview:self.titleLabel];
-
+		
+		self.detailLabel = [[UILabel alloc] initWithFrame:frame];
+		self.detailLabel.textAlignment = UITextAlignmentCenter;
+        self.detailLabel.backgroundColor = [UIColor clearColor];
+        self.detailLabel.textColor = [UIColor whiteColor];
+        self.detailLabel.font = [UIFont boldSystemFontOfSize:12.0];
+        self.detailLabel.shadowColor = [UIColor darkGrayColor];
+        self.detailLabel.shadowOffset = CGSizeMake(0, -1);
+		[self addSubview:self.detailLabel];
+		
         self.arrow = [[UIImageView alloc] initWithImage:[_menuConfiguration arrowImage]];
         [self addSubview:self.arrow];
 		
@@ -51,7 +60,10 @@
 	[super layoutSubviews];
 		
     [self.titleLabel sizeToFit];
-    self.titleLabel.center = CGPointMake(self.frame.size.width/2, (self.frame.size.height-2.0)/2);
+	[self.detailLabel sizeToFit];
+	CGFloat centerY = (self.frame.size.height - self.detailLabel.frame.size.height/2 - 4)/2 - (self.detailLabel.text.length > 0 ? 2 : 0);
+    self.titleLabel.center = CGPointMake(self.frame.size.width/2, centerY);
+	self.detailLabel.center = CGPointApplyAffineTransform(self.titleLabel.center, CGAffineTransformMakeTranslation(0, self.titleLabel.frame.size.height/2 + 2));
     self.arrow.center = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + [_menuConfiguration arrowPadding], self.frame.size.height / 2);
 }
 

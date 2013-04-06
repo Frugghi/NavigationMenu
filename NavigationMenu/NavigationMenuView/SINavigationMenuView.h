@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSArray *items;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong, readonly) UILabel *titleLabel;
+@property (nonatomic, strong, readonly) UILabel *detailLabel;
 
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title;
 - (void)displayMenuInView:(UIView *)view;

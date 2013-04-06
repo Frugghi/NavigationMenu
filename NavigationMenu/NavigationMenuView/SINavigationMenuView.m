@@ -97,6 +97,11 @@
 	return self.menuButton.titleLabel;
 }
 
+- (UILabel *)detailLabel
+{
+	return self.menuButton.detailLabel;
+}
+
 - (void)setMenuConfiguration:(Class)menuConfiguration
 {
 	if (_menuConfiguration != menuConfiguration && [menuConfiguration isSubclassOfClass:[SIMenuConfiguration class]]) {

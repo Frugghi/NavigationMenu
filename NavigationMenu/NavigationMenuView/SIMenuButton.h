@@ -17,6 +17,7 @@
 @property (nonatomic, assign) CGFloat spotlightEndRadius;
 @property (nonatomic, assign) CGPoint spotlightCenter;
 @property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UILabel *detailLabel;
 @property (nonatomic, strong) UIImageView *arrow;
 
 - (UIImageView *)defaultGradient;
