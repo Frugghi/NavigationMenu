@@ -118,6 +118,13 @@
 	}
 }
 
+- (void)setItems:(NSArray *)items
+{
+	_items = items;
+	
+	[_menuButton setEnabled:([_items count] > 1)];
+}
+
 #pragma mark - Actions
 
 - (void)onHandleMenuTap:(id)sender

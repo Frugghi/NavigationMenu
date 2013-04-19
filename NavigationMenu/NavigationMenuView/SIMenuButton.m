@@ -43,6 +43,13 @@
     return self;
 }
 
+- (void)setEnabled:(BOOL)enabled
+{
+	[super setEnabled:enabled];
+	
+	[_arrow setHidden:!enabled];
+}
+
 - (void)setFrame:(CGRect)frame
 {
 	[super setFrame:frame];
