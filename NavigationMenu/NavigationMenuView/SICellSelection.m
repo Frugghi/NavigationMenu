@@ -9,6 +9,12 @@
 #import "SICellSelection.h"
 #import <QuartzCore/QuartzCore.h>
 
+@interface SICellSelection () {
+	CAGradientLayer *_gradientLayer;
+}
+
+@end
+
 @implementation SICellSelection
 
 - (id)initWithFrame:(CGRect)frame
@@ -21,32 +27,34 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.baseColor = baseColor;
-    }
+	}
     return self;
 }
 
-- (void)drawRect:(CGRect)rect
+- (void)setBaseColor:(UIColor *)baseColor
 {
-    [super drawRect:rect];
-    
-    CGFloat hue;
-    CGFloat saturation;
-    CGFloat brightness;
-    CGFloat alpha;
-    
-    if([self.baseColor getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha]){
-        brightness -= 0.35f;
-    }
-    
-    UIColor *highColor = self.baseColor;
-    UIColor *lowColor = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:alpha];
-    
-    CAGradientLayer *gradient = [CAGradientLayer layer];
-    [gradient setFrame:[self bounds]];
-    [gradient setColors:[NSArray arrayWithObjects:(id)[highColor CGColor], (id)[lowColor CGColor], nil]];
-    [[self layer] addSublayer:gradient];
-
-    [self setNeedsDisplay];     
+	_baseColor = baseColor;
+	
+	CGFloat hue;
+	CGFloat saturation;
+	CGFloat brightness;
+	CGFloat alpha;
+	
+	if([self.baseColor getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha]){
+		brightness -= 0.35f;
+	}
+	
+	UIColor *highColor = self.baseColor;
+	UIColor *lowColor = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:alpha];
+	
+	if (!_gradientLayer) {
+		_gradientLayer = [CAGradientLayer layer];
+	}
+	[_gradientLayer setFrame:[self bounds]];
+	[_gradientLayer setColors:[NSArray arrayWithObjects:(id)[highColor CGColor], (id)[lowColor CGColor], nil]];
+	if (!_gradientLayer.superlayer) {
+		[[self layer] addSublayer:_gradientLayer];
+	}
 }
 
 @end

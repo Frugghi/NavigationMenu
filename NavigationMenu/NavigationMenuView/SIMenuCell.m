@@ -25,7 +25,7 @@
     if (self) {
 		_menuConfiguration = [SIMenuConfiguration class];
         
-        self.cellSelection = [[SICellSelection alloc] initWithFrame:self.bounds andColor:[_menuConfiguration selectionColor]];
+        self.cellSelection = [[SICellSelection alloc] initWithFrame:self.contentView.bounds andColor:[_menuConfiguration selectionColor]];
         [self.contentView insertSubview:self.cellSelection belowSubview:self.textLabel];
 		
 		[self configure];
@@ -76,11 +76,6 @@
     CGContextAddLineToPoint(ctx, self.contentView.bounds.size.width, 0);
     CGContextStrokePath(ctx);
     
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
 }
 
 - (void)setSelected:(BOOL)selected withCompletionBlock:(void (^)())completion
